@@ -142,7 +142,7 @@ export function GroupedBarChart({ categories, series, format, ariaLabel, height 
               const x0 = cx(i) - inner / 2 + k * (barW + 2) + 1;
               const top = y(Math.max(v, 0));
               const h = Math.abs(y(v) - y(0));
-              return <path key={s.name} d={roundedTop(x0, top, barW, h)} fill={s.color} />;
+              return <path key={s.name} d={roundedTop(x0, top, barW, h)} fill={s.color} stroke="var(--ink)" strokeWidth={0.8} />;
             })}
             {(i % Math.ceil(categories.length / 13) === 0) && <text className="tick" x={cx(i)} y={H - 8} textAnchor="middle">{c}</text>}
           </g>
@@ -158,6 +158,77 @@ export function GroupedBarChart({ categories, series, format, ariaLabel, height 
         <div className="chart-tooltip" style={{ left: `${(cx(hover) / W) * 100}%`, top: 24 }}>
           <div className="t-title">{categories[hover]}</div>
           {series.map((s) => <div key={s.name} className="row" style={{ gap: 6 }}><i style={{ width: 8, height: 8, background: s.color, display: 'inline-block', borderRadius: 2 }} />{s.name}: <strong>{format(s.values[hover])}</strong></div>)}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------- Hatched stacked bars (dashboard "Statistics")
+
+export interface StackDatum { label: string; solid: number; hatched: number }
+
+/**
+ * Two-part bars in the dashboard style: the hatched segment sits on the baseline,
+ * the solid ink segment on top. A tag above one bar calls out a headline figure.
+ */
+export function HatchedBarChart({ data, solidName, hatchedName, format, tag, tagIndex, ariaLabel }: {
+  data: StackDatum[]; solidName: string; hatchedName: string; format: (v: number) => string;
+  tag?: string; tagIndex?: number; ariaLabel: string;
+}) {
+  const W = 320, H = 200, L = 6, R = 6, T = 26, B = 24;
+  const [hover, setHover] = useState<number | null>(null);
+  const max = Math.max(1, ...data.map((d) => d.solid + d.hatched));
+  const band = (W - L - R) / Math.max(data.length, 1);
+  const barW = Math.min(18, band * 0.42);
+  const y = (v: number) => T + (1 - v / max) * (H - T - B);
+  const cx = (i: number) => L + band * i + band / 2;
+  return (
+    <div className="chart">
+      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={ariaLabel} onMouseLeave={() => setHover(null)}>
+        <defs>
+          <pattern id="hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <rect width="5" height="5" fill="var(--surface)" />
+            <line x1="0" y1="0" x2="0" y2="5" stroke="var(--ink)" strokeWidth="1.4" />
+          </pattern>
+        </defs>
+        <line x1={L} x2={W - R} y1={H - B} y2={H - B} stroke="var(--ink)" strokeWidth={1} />
+        {data.map((d, i) => {
+          const x = cx(i) - barW / 2;
+          const yh = y(d.hatched);
+          const yt = y(d.hatched + d.solid);
+          return (
+            <g key={d.label} onMouseEnter={() => setHover(i)}>
+              <rect x={cx(i) - band / 2} y={T} width={band} height={H - T - B} fill="transparent" />
+              <rect x={x} y={yh} width={barW} height={H - B - yh} fill="url(#hatch)" stroke="var(--ink)" strokeWidth={1} />
+              <rect x={x} y={yt} width={barW} height={Math.max(0, yh - yt)} fill="var(--ink)" />
+              <text className="tick" x={cx(i)} y={H - 7} textAnchor="middle">{d.label}</text>
+            </g>
+          );
+        })}
+        {tag && tagIndex !== undefined && data[tagIndex] && (() => {
+          // Callout pinned to the top band so it never overlaps neighbouring bars; clamped inside the chart.
+          const tagW = 70;
+          const tx = Math.min(W - R - tagW / 2, Math.max(L + tagW / 2, cx(tagIndex)));
+          const barTop = y(data[tagIndex].solid + data[tagIndex].hatched);
+          return (
+            <g pointerEvents="none">
+              {barTop > 22 && <line x1={cx(tagIndex)} x2={cx(tagIndex)} y1={20} y2={barTop - 2} stroke="var(--ink)" strokeWidth={0.8} strokeDasharray="2 2" />}
+              <rect x={tx - tagW / 2} y={4} width={tagW} height={16} rx={2} fill="var(--mauve)" stroke="var(--ink)" strokeWidth={0.8} />
+              <text x={tx} y={15.5} textAnchor="middle" fontSize={9.5} fontWeight={700} fill="#111">{tag}</text>
+            </g>
+          );
+        })()}
+      </svg>
+      <div className="legend" style={{ marginTop: 8, marginBottom: 0 }}>
+        <span><i style={{ background: 'var(--ink)' }} />{solidName}</span>
+        <span><i style={{ background: 'repeating-linear-gradient(45deg, var(--ink) 0 1.5px, var(--surface) 1.5px 4px)' }} />{hatchedName}</span>
+      </div>
+      {hover !== null && data[hover] && (
+        <div className="chart-tooltip" style={{ left: `${(cx(hover) / W) * 100}%`, top: 30 }}>
+          <div className="t-title">{data[hover].label}</div>
+          <div>{hatchedName}: <strong>{format(data[hover].hatched)}</strong></div>
+          <div>{solidName}: <strong>{format(data[hover].solid)}</strong></div>
         </div>
       )}
     </div>
