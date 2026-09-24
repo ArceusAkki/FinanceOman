@@ -13,8 +13,8 @@ export const FALLBACK_OPTIONS = {
 
 /** AI is on when credentials are configured, unless explicitly forced offline. */
 export function aiEnabled(): boolean {
-  if (process.env.FINANCEOMAN_OFFLINE === '1') return false;
-  return Boolean(process.env.ANTHROPIC_API_KEY || process.env.ANTHROPIC_AUTH_TOKEN || process.env.FINANCEOMAN_AI === 'on');
+  if (process.env.COGNIFI_OFFLINE === '1') return false;
+  return Boolean(process.env.ANTHROPIC_API_KEY || process.env.ANTHROPIC_AUTH_TOKEN || process.env.COGNIFI_AI === 'on');
 }
 
 let client: Anthropic | null = null;
@@ -50,7 +50,7 @@ export function describeAiError(error: unknown): string {
   return 'Unexpected AI error; showing the offline analysis instead.';
 }
 
-export const FINANCE_SYSTEM_PROMPT = `You are FinanceOman, an AI analyst embedded in the finance department of an Omani company.
+export const FINANCE_SYSTEM_PROMPT = `You are Cognifi, an AI finance analyst embedded in the finance department of an Omani company.
 You understand how finance processes run in SAP (ECC and S/4HANA) and Oracle (E-Business Suite and Fusion Cloud ERP):
 Procure-to-Pay, Order-to-Cash, Record-to-Report, treasury and the period close, including the transactions, tables, approval workflows and controls involved.
 You also know the Omani context: amounts are in Omani Rial (OMR, three decimals), VAT is 5%, withholding tax of 10% applies to certain payments to non-residents,

@@ -39,7 +39,7 @@ export function CloseCockpit({ version }: { version: number }) {
             const end = t.actualDay ?? t.plannedDay;
             return (
               <div key={t.id} role="row" style={{ display: 'grid', gridTemplateColumns: 'minmax(180px, 30%) 1fr 110px', gap: 12, alignItems: 'center', fontSize: 13 }}>
-                <span role="cell">{t.onCriticalPath && <span title="Critical path" style={{ color: 'var(--accent)' }}>★ </span>}{t.name} <span className="muted small">· {t.owner}</span></span>
+                <span role="cell">{t.onCriticalPath && <span title="Critical path" style={{ color: 'var(--series-2)' }}>★ </span>}{t.name} <span className="muted small">· {t.owner}</span></span>
                 <span role="cell" style={{ position: 'relative', height: 20, background: 'var(--surface-2)', borderRadius: 4 }}>
                   <span style={{ position: 'absolute', left: 0, width: `${(t.plannedDay / maxDay) * 100}%`, top: 0, bottom: 0, border: '1.5px dashed var(--muted)', borderRadius: 4 }} />
                   <span style={{ position: 'absolute', left: 0, width: `${(end / maxDay) * 100}%`, top: 4, bottom: 4, background: t.risk === 'late' ? 'var(--series-2)' : 'var(--series-1)', opacity: t.status === 'done' ? 1 : 0.45, borderRadius: '0 4px 4px 0' }} />

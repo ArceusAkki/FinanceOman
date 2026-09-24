@@ -1,8 +1,8 @@
-# FinanceOman
+# Cognifi
 
-**AI workflow intelligence for finance departments that run SAP or Oracle.**
+**Finance that thinks: AI workflow intelligence for finance departments that run SAP or Oracle.**
 
-FinanceOman learns how a company's finance team *actually* works — not how the SOP says it works. It mines the event trail your ERP already records (purchase orders, receipts, invoices, payments, journals, sales orders), reconstructs the real Procure-to-Pay, Order-to-Cash and Record-to-Report workflows, and uses Claude to explain them, find control gaps and fraud risk, and show where automation pays off. It is built for Omani and GCC companies: OMR with three decimals, 5% VAT, 10% withholding tax, a Friday–Saturday weekend and Fawtara e-invoicing readiness.
+Cognifi learns how a company's finance team *actually* works — not how the SOP says it works. It mines the event trail your ERP already records (purchase orders, receipts, invoices, payments, journals, sales orders), reconstructs the real Procure-to-Pay, Order-to-Cash and Record-to-Report workflows, and uses Claude to explain them, find control gaps and fraud risk, and show where automation pays off. It is built for Omani and GCC companies: OMR with three decimals, 5% VAT, 10% withholding tax, a Friday–Saturday weekend and Fawtara e-invoicing readiness.
 
 > The research behind the feature set, with sources, is in [`docs/RESEARCH.md`](docs/RESEARCH.md).
 
@@ -51,7 +51,7 @@ npm run typecheck
 |---|---|---|
 | `ANTHROPIC_API_KEY` | — | Enables Claude. Without it the rules engine answers. |
 | `ANTHROPIC_MODEL` | `claude-opus-5` | Model used for all AI features. |
-| `FINANCEOMAN_OFFLINE` | — | Set to `1` to force offline mode even when a key is present. |
+| `COGNIFI_OFFLINE` | — | Set to `1` to force offline mode even when a key is present. |
 | `PORT` | `8787` | Port for `npm start` (production). |
 | `API_PORT` | `8787` | API port during `npm run dev`. |
 

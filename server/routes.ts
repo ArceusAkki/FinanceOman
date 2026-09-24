@@ -4,6 +4,7 @@ import { PROCESS_KEYS, REFERENCE_MODELS, type ProcessKey } from '../src/engine';
 import { eventsToCsv, parseEventLogCsv } from '../src/engine/eventLog';
 import { discover } from '../src/engine/processMining';
 import { checkConformance } from '../src/engine/conformance';
+import { monthlyInvoicePosting, trailingCashFlows, upcomingPayments } from '../src/engine/overview';
 import { workspace } from './workspace';
 import { MODEL, aiEnabled } from './ai/client';
 import { interpretWorkflow } from './ai/workflowInterpreter';
@@ -53,6 +54,9 @@ api.get('/overview', route((_req, res) => {
     cash: { lowestBalance: a.cash.lowestBalance, lowestWeek: a.cash.lowestWeek, openingBalance: a.cash.openingBalance },
     matching: { firstPassMatchRate: a.matching.firstPassMatchRate, byStatus: a.matching.byStatus },
     automation: a.automation.slice(0, 5),
+    postingByMonth: monthlyInvoicePosting(workspace.data),
+    cashFlows: trailingCashFlows(workspace.data),
+    upcomingPayments: upcomingPayments(workspace.data),
   });
 }));
 

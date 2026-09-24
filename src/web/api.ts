@@ -8,6 +8,7 @@ import type { BenfordResult } from '../engine/benford';
 import type { MatchResult, MatchStatus } from '../engine/matching';
 import type { CashForecast } from '../engine/cashForecast';
 import type { AutomationOpportunity } from '../engine/automation';
+import type { CashFlows, MonthlyPosting, ScheduledPayment } from '../engine/overview';
 
 export type { Finding, ProcessKey, CloseTaskInsight, AutomationOpportunity, CashForecast, MatchStatus };
 
@@ -29,6 +30,9 @@ export interface Overview {
   cash: { lowestBalance: number; lowestWeek: number; openingBalance: number };
   matching: { firstPassMatchRate: number; byStatus: Record<MatchStatus, number> };
   automation: AutomationOpportunity[];
+  postingByMonth: MonthlyPosting[];
+  cashFlows: CashFlows;
+  upcomingPayments: ScheduledPayment[];
 }
 
 export interface ProcessDetail {

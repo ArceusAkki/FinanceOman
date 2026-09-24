@@ -2,7 +2,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import type { Server } from 'node:http';
 import type { AddressInfo } from 'node:net';
 
-process.env.FINANCEOMAN_OFFLINE = '1';
+process.env.COGNIFI_OFFLINE = '1';
 
 let server: Server;
 let base = '';

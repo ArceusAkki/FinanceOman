@@ -41,6 +41,6 @@ export function createApp() {
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   createApp().listen(port, () => {
-    console.log(`FinanceOman API listening on http://localhost:${port} (AI: ${aiEnabled() ? MODEL : 'offline mode'})`);
+    console.log(`Cognifi API listening on http://localhost:${port} (AI: ${aiEnabled() ? MODEL : 'offline mode'})`);
   });
 }

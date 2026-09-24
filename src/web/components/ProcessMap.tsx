@@ -95,8 +95,8 @@ export function ProcessMap({ activities, edges, exceptionActivities, metric }: P
             if (name === START || name === END) {
               return (
                 <g key={name} className="node">
-                  <rect x={x} y={y} width={n.width} height={n.height} rx={15} style={{ fill: 'var(--nav)', stroke: 'none' }} />
-                  <text x={n.x} y={n.y + 4} textAnchor="middle" style={{ fill: '#fff', fontWeight: 600 }}>{name}</text>
+                  <rect x={x} y={y} width={n.width} height={n.height} rx={15} style={{ fill: 'var(--ink)', stroke: 'none' }} />
+                  <text x={n.x} y={n.y + 4} textAnchor="middle" style={{ fill: 'var(--on-ink)', fontWeight: 600 }}>{name}</text>
                 </g>
               );
             }
