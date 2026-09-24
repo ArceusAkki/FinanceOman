@@ -1,0 +1,18 @@
+# Dependencies & build output
+node_modules/
+dist/
+
+# Secrets
+.env
+.env.local
+.env.*.local
+
+# Local tooling / agent runtime data
+.claude/
+.claude-flow/
+.swarm/
+.mcp.json
+ruvector.db
+agentdb*
+*.log
+.DS_Store
