@@ -1,6 +1,6 @@
-# FinanceOman — Research Report
+# Cognifi — Research Report
 **Topic:** How finance-department workflows run on SAP (ECC / S/4HANA) and Oracle (EBS / Fusion Cloud ERP), how to discover them from ERP data, where AI adds measurable value, and the Oman / GCC specifics.
-**Date of research:** September 2026. **Author:** FinanceOman research lead.
+**Date of research:** September 2026. **Author:** Cognifi research lead.
 
 **How to read this document**
 - `[n]` = source in the *Sources* section at the end.
@@ -15,7 +15,7 @@
 
 1. The finance "core four" (P2P, O2C, R2R, Treasury) share one data spine in each ERP: SAP's document flow (EBAN → EKKO/EKPO → MATDOC/MSEG → RBKP/RSEG → BKPF/ACDOCA + CDHDR/CDPOS) and Oracle's (PO_* → RCV_* → AP_* → XLA_* → GL_*). An event log for process mining can be built from these tables without changing the ERP [36][37].
 2. Measured gaps between top and average performers are large: best-in-class AP processes invoices in ~2.9 days vs 8.2 days average and at ~79% lower cost per invoice (Ardent Partners 2025) [16][17]; APQC top-performers need 3.3 AP FTEs per $1B revenue vs 14.4 for bottom performers [18]; upper-quartile DSO is 28 days vs 46 median (Hackett, FY2024 data) [20]; half of finance teams still need 6+ business days to close [22].
-3. Both SAP and Oracle shipped finance AI agents in 2025–2026 (SAP: Cash Management Agent, Dispute Resolution Agent, intelligent GR/IR, e-document error explanation [24][25][26][27]; Oracle: Ledger, Payables, Payments and Expenses agents in Fusion 26B, included at no extra cost [28][29]). These are strongest on **cloud** editions; the many Omani firms on ECC, EBS or heavily customised on-premise systems get little of it. **That gap is FinanceOman's opportunity (Inference).**
+3. Both SAP and Oracle shipped finance AI agents in 2025–2026 (SAP: Cash Management Agent, Dispute Resolution Agent, intelligent GR/IR, e-document error explanation [24][25][26][27]; Oracle: Ledger, Payables, Payments and Expenses agents in Fusion 26B, included at no extra cost [28][29]). These are strongest on **cloud** editions; the many Omani firms on ECC, EBS or heavily customised on-premise systems get little of it. **That gap is Cognifi's opportunity (Inference).**
 4. Oman specifics that must be built in from day one: 5% VAT (since 16 Apr 2021) [1][2]; 10% withholding tax on certain payments to non-residents, with dividends and interest suspended since 2023 [3]; **Fawtara e-invoicing is mandatory from 1 Apr 2027 (annual supplies > OMR 5m) and 1 Oct 2027 (all others)** under Decision 189/2026, with a voluntary pilot of ~100 large companies that started in Aug 2026 [4][5]; OMR has **3 decimals** (1,000 baisa) and is pegged at USD 2.6008 [8].
 
 ---
@@ -117,7 +117,7 @@ Other: # manual JEs, % reconciliations completed on time, # post-close adjustmen
 ### 2.1 Typical customisations (PK + Inference)
 - **SAP:** Z-transactions for invoice entry/upload, custom Z-tables for approval matrices (by cost centre / amount / plant), Z-reports replacing standard ageing (FBL1N/FBL5N clones), user exits/BAdIs on MIRO and F110, custom DMEE payment formats per local bank, custom VAT reports.
 - **Oracle:** custom AME rules and attributes, custom concurrent programs for bank files and VAT returns, DFFs (descriptive flexfields) carrying approval or project codes, personalisations in OAF/Fusion page composer, spreadsheet (ADFdi / WebADI) uploads as the main JE route.
-- **Outside the ERP:** approval by e-mail and signed PDFs, Excel trackers for accruals and GR/IR, SharePoint close checklists, bank portals used directly for urgent payments, WhatsApp/phone follow-ups (common in the GCC — Inference). These "shadow workflows" are invisible to process mining unless captured separately — **a core reason FinanceOman needs document/e-mail ingestion alongside ERP logs (Inference).**
+- **Outside the ERP:** approval by e-mail and signed PDFs, Excel trackers for accruals and GR/IR, SharePoint close checklists, bank portals used directly for urgent payments, WhatsApp/phone follow-ups (common in the GCC — Inference). These "shadow workflows" are invisible to process mining unless captured separately — **a core reason Cognifi needs document/e-mail ingestion alongside ERP logs (Inference).**
 
 ### 2.2 Pain points & exceptions (and how they appear in data)
 
@@ -209,7 +209,7 @@ A classic event log needs **case ID, activity, timestamp, resource** (plus attri
 
 ---
 
-## 5. Ranked AI features for FinanceOman (value × feasibility)
+## 5. Ranked AI features for Cognifi (value × feasibility)
 
 Scoring (Inference): Value 1–5 (KPI impact × prevalence in Omani mid/large enterprises), Feasibility 1–5 (data availability via read-only extraction, technique maturity, low integration risk). Rank by product.
 
@@ -253,7 +253,7 @@ Scoring (Inference): Value 1–5 (KPI impact × prevalence in Omani mid/large en
 - **Model & format:** Peppol-based **five-corner** model via OTA-accredited service providers, near-real-time reporting/validation by OTA; OTA became a Peppol Authority (Jan 2026) and published the **PINT OM** specification (April 2026); **UBL 2.1 XML** per PINT OM (PDF/A-3 mentioned by some advisors) — plain PDFs and images do not qualify [4][5][6].
 - **Platform milestones:** sandbox Feb 2026; platform Release 2 live 28 June 2026; ~a dozen service providers accredited by July 2026 [6].
 - **Penalties & archiving:** secondary sources cite OMR 500–5,000 per violation and 10-year electronic archiving — **Unverified; confirm with OTA text** [5].
-- **Implication for FinanceOman (Inference):** e-invoicing turns supplier invoices into structured XML, raising touchless-match potential and making pre-submission validation, rejection explanation (cf. SAP's Joule e-document error explanation [24]) and reconciliation of OTA-cleared invoices vs ERP postings high-value features. SAP (Document and Reporting Compliance) and Oracle will ship Oman connectors; FinanceOman should *complement*, not replace, the ERP's e-invoice submission.
+- **Implication for Cognifi (Inference):** e-invoicing turns supplier invoices into structured XML, raising touchless-match potential and making pre-submission validation, rejection explanation (cf. SAP's Joule e-document error explanation [24]) and reconciliation of OTA-cleared invoices vs ERP postings high-value features. SAP (Document and Reporting Compliance) and Oracle will ship Oman connectors; Cognifi should *complement*, not replace, the ERP's e-invoice submission.
 
 ### 6.3 Currency, banking and calendar
 - **OMR:** ISO 4217 code OMR (512), **3 decimal places** — 1 rial = 1,000 baisa; pegged to USD at **USD 2.6008 per OMR** since 1986 (≈ OMR 0.3845 per USD) [8]. Design implications: store amounts as fixed-point with ≥3 decimals, handle rounding differences when interfacing with 2-decimal systems (Inference).
@@ -275,7 +275,7 @@ Scoring (Inference): Value 1–5 (KPI impact × prevalence in Omani mid/large en
 | Oman Data Park | Hosts Oracle Cloud ERP locally (marketing posts) | (social posts; Unverified) |
 | **Omantel, banks (e.g., Bank Muscat), PDO, others** | **Not verified** in this research — no authoritative public source found. Must be confirmed per account. | — |
 
-**Market implication (Inference):** expect a mixed estate — SAP ECC → S/4HANA migrations under the 2027 deadline [39] in energy/industrial groups, Oracle (EBS and Fusion) in government and many services firms, plus Microsoft Dynamics / local ERPs in the mid-market. Data-residency expectations are strong (both OQ's SAP and the government's Oracle cloud are in-country [14][15]) — FinanceOman should plan for in-country hosting or on-prem deployment.
+**Market implication (Inference):** expect a mixed estate — SAP ECC → S/4HANA migrations under the 2027 deadline [39] in energy/industrial groups, Oracle (EBS and Fusion) in government and many services firms, plus Microsoft Dynamics / local ERPs in the mid-market. Data-residency expectations are strong (both OQ's SAP and the government's Oracle cloud are in-country [14][15]) — Cognifi should plan for in-country hosting or on-prem deployment.
 
 ### 6.6 GCC context (brief)
 - VAT across the GCC follows the GCC unified agreement; Oman's 5% matches UAE; Saudi Arabia is 15% (PK). Saudi ZATCA "FATOORA" (clearance, since 2021) and UAE's Peppol-based programme are the regional precedents Oman's design resembles (PK / Inference). A GCC-extensible tax-rule engine is advisable.
